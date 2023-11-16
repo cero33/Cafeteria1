@@ -1,0 +1,110 @@
+<?php
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "medico1";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Verificar las credenciales de inicio de sesión
+session_start();
+if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'secretario')) {
+    header('Location: login.php'); // Redirigir a la página de inicio de sesión si no tiene permiso
+}
+
+// Obtener las citas pendientes de los médicos
+$sql = "SELECT Medicos.nombre AS medico, Citas.fecha_hora, Pacientes.nombre AS paciente
+        FROM Citas
+        JOIN Medicos ON Citas.medico_id = Medicos.id
+        JOIN Pacientes ON Citas.paciente_id = Pacientes.id
+        WHERE Citas.fecha_hora > NOW()
+        ORDER BY Medicos.nombre, Citas.fecha_hora";
+
+$result = $conn->query($sql);
+
+$medico_actual = '';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ver Citas</title>
+    <style>
+        /* Estilos CSS aquí */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .medico-header {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Agrega otros estilos según tus preferencias */
+    </style>
+</head>
+<body>
+    <h1>Citas Pendientes</h1>
+    <table>
+        <tr>
+            <th>Médico</th>
+            <th>Fecha y Hora</th>
+            <th>Paciente</th>
+        </tr>
+        <?php
+        while ($row = $result->fetch_assoc()) {
+            if ($row['medico'] !== $medico_actual) {
+                echo '<tr><td colspan="3" class="medico-header"><strong>' . $row['medico'] . '</strong></td></tr>';
+                $medico_actual = $row['medico'];
+            }
+            echo '<tr>';
+            echo '<td>' . $row['medico'] . '</td>';
+            echo '<td>' . $row['fecha_hora'] . '</td>';
+            echo '<td>' . $row['paciente'] . '</td>';
+            echo '</tr>';
+        }
+        ?>
+    </table>
+    <script>
+        // JavaScript aquí
+        document.addEventListener("DOMContentLoaded", function() {
+            const rows = document.querySelectorAll("table tr");
+            rows.forEach(row => {
+                row.addEventListener("click", function() {
+                    this.classList.toggle("selected");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>

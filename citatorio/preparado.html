@@ -1,0 +1,143 @@
+<?php
+// Verificar si el usuario ha iniciado sesión; de lo contrario, redirigir a login.php
+session_start();
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Obtener el rol del usuario desde la sesión
+if (isset($_SESSION['rol'])) {
+    $rol = $_SESSION['rol'];
+
+    // Lógica para ver pedidos (empleados y admin)
+    if (isset($_POST['ver_citas']) && ($rol == 'admin' || $rol == 'secretario')) {
+        header("Location: ver_citas.php");
+        exit();
+    }
+} else {
+    // Manejo de error si no se encuentra la clave "rol" en la sesión
+    echo "Error: No se ha encontrado el rol del usuario.";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Nuestra Salud</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Estilos del Carrusel Slick -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+
+    <!-- JavaScript del Carrusel Slick -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="left-button" style="background-color: #D9D9D9;"><h1 class="font1">Hospital</h1></div>
+        <div class="right-buttons">
+            <div class="button" style="background-color: #D9D9D9;"><h2 class="font1">Inicio</h2></div>
+            <div class="button" style="background-color: #D9D9D9;"><h2 class="font1">Acerca de Nosotros</h2></div>
+            <div class="button" style="background-color: #D9D9D9;"><h2 class="font1">Contacto</h2></div>
+            <div class="button" style="background-color: #D9D9D9;" onclick="cerrarSesion()"><h2 class="font1">Cerrar Sesión</a></h2></div>
+                    <?php
+                    // Verificar el rol del usuario y mostrar enlaces apropiados
+                    session_start();
+                    if (isset($_SESSION['rol'])) {
+                        $rolesPermitidosHacerCita = ['admin', 'secretario', 'medico', 'paciente'];
+                        $rolesPermitidosVerCitas = ['admin', 'secretario', 'medico'];
+                        
+                        if (in_array($_SESSION['rol'], $rolesPermitidosHacerCita)) {
+                            echo '<a href="hacer_cita.php"><button>Hacer Cita</button></a>';
+                        }
+                        
+                        if (in_array($_SESSION['rol'], $rolesPermitidosVerCitas)) {
+                            echo '<a href="ver_cita.php"><button>Ver Citas</button></a>';
+                        }
+                    }
+                    ?>
+        
+        </div>
+    </header>
+    <br>
+    <br>
+    <div class="carousel">
+        <div><img src="img/Rectangle 16.png" alt="Imagen 1"></div>
+        <div><img src="img/Rectangle 15.png" alt="Imagen 2"></div>
+        <div><img src="img/Rectangle 14.png" alt="Imagen 3"></div>
+    </div>
+
+    <div class="contenido">
+        <h1>Bienvenido a Hospital Nuestra Salud</h1>
+        <p>Somos una institución médica comprometida con su bienestar y salud. Nuestra misión es brindar atención médica de alta calidad y cuidado compasivo a nuestra comunidad.</p>
+
+        <h2>Nuestros Servicios</h2>
+        <ul>
+            <li>Atención de Emergencia las 24 horas</li>
+            <li>Atención Hospitalaria especializada</li>
+            <li>Atención Ambulatoria y consultas médicas</li>
+            <li>Cirugía avanzada con tecnología de vanguardia</li>
+            <li>Maternidad con atención personalizada</li>
+        </ul>
+
+        <h2>Contacto</h2>
+        <p>Si tiene alguna pregunta o necesita programar una cita, no dude en ponerse en contacto con nosotros:</p>
+        <p>Correo Electrónico: info@hospitalnuestrasalud.com</p>
+        <p>Teléfono de Contacto: +123-456-7890</p>
+
+        <h2>Comentarios</h2>
+        <p>Valoramos sus comentarios y sugerencias. Utilice el formulario a continuación para compartir sus opiniones con nosotros.</p>
+        <form>
+            <label for="comentarios">Sus Comentarios:</label>
+            <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea><br>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+
+    <footer style="background-color: #383838; color: white; text-align: center; padding: 10px;">
+        &copy; 2023 Hospital Nuestra Salud. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        $('.carousel').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+        });
+    });
+</script>
+
+<script>
+    // JavaScript para ajustar el ancho de los botones basado en el contenido
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(button => {
+            button.style.minWidth = `${button.offsetWidth}px`;
+        });
+    });
+</script>
+
+<script>
+    function cerrarSesion() {
+        // Agrega el código para cerrar la sesión si es necesario
+        window.location.href = 'cerrar_sesion.php'; // Redirige a la página de cierre de sesión
+    }
+</script>
