@@ -1,25 +1,52 @@
-# Citatorio Médico
+# Cafetería XYZ
 
-## Descripción:
+Bienvenido a la aplicación de gestión para la Cafetería XYZ. Esta aplicación está diseñada para facilitar la administración de pedidos, ventas y usuarios en una cafetería.
 
-Este repositorio alberga una solución integral para la gestión eficiente de citatorios médicos. Optimizado para entornos clínicos y de atención médica, nuestro sistema facilita la programación, seguimiento y recordatorio de citas médicas de manera efectiva. Desde la generación automatizada de citatorios hasta la notificación oportuna a los pacientes, nuestra herramienta busca mejorar la experiencia tanto para el personal médico como para los pacientes.
+## Características Principales
 
-## Características destacadas:
+- **Realización de Pedidos:** Explora el menú y realiza pedidos de manera fácil y rápida.
+- **Seguimiento de Pedidos:** Verifica el estado de tus pedidos y accede al historial de pedidos anteriores.
+- **Gestión de Ventas y Reportes:** Obtén informes detallados sobre las ventas y el rendimiento.
+- **Roles de Usuario:** Administrador, Empleado y Usuario General con diferentes niveles de acceso.
+- **Configuraciones Personalizadas:** Ajusta tu perfil y preferencias de cuenta.
 
-- **Generación Automatizada de Citatorios:** Cree fácilmente citatorios médicos con información detallada sobre la fecha, hora y lugar de la cita.
+## Cómo Empezar
 
-- **Seguimiento Eficiente:** Haga un seguimiento claro del estado de las citas, desde la programación hasta la confirmación por parte de los pacientes.
+1. **Registro y Autenticación:**
+   - Crea una cuenta o inicia sesión si ya tienes una.
 
-- **Notificaciones Personalizadas:** Envíe recordatorios automáticos a los pacientes a través de diversos canales para reducir las ausencias y mejorar la puntualidad.
+2. **Realizar un Pedido:**
+   - Explora el menú, personaliza tu pedido y confírmalo.
 
-- **Interfaz Intuitiva:** Diseñada pensando en la usabilidad, nuestra interfaz proporciona una experiencia fluida para la administración y visualización de citas.
+3. **Seguir tus Pedidos:**
+   - Verifica el estado de tus pedidos en la sección correspondiente.
 
-- **Integración con Calendarios:** Sincronice fácilmente las citas programadas con calendarios externos para una gestión aún más conveniente.
+4. **Acceder a Informes:**
+   - Los administradores pueden acceder a informes detallados en la sección de gestión.
 
-## Contribuciones:
+## Roles de Usuario
 
-¡Agradecemos las contribuciones de la comunidad! Siéntase libre de informar problemas, enviar solicitudes de extracción o sugerir mejoras. Juntos, podemos hacer que la gestión de citas médicas sea más eficiente y accesible para todos.
+- **Administrador:**
+  - Acceso completo a todas las funciones, incluida la gestión de usuarios y la visualización de informes.
 
-## Licencia:
+- **Empleado:**
+  - Puede realizar y gestionar pedidos, con restricciones en la gestión de usuarios.
 
-Este proyecto está bajo la licencia MTA para fomentar la colaboración abierta y el desarrollo compartido.
+- **Usuario General:**
+  - Puede realizar pedidos y realizar un seguimiento, sin acceso a funciones administrativas.
+
+## Configuración del Proyecto
+
+- Clona el repositorio: `git clone https://github.com/tu-usuario/cafeteria-xyz.git`
+- Instala las dependencias: `npm install`
+- Inicia la aplicación: `npm start`
+
+## Contribución
+
+¡Contribuciones son bienvenidas! Si encuentras errores o deseas mejorar alguna función, crea un "issue" o envía un "pull request".
+
+## Contacto
+
+Para preguntas o soporte, contacta al equipo de Cafetería XYZ en [correo@cafetería-xyz.com](mailto:correo@cafeteria-xyz.com).
+
+¡Disfruta tu experiencia en nuestra cafetería digital!
